@@ -76,7 +76,7 @@ public:
    * @brief Reads the humidity from the device
    * @return Returns the humidity read from the device
    */
-  uint8_t readHumidity(void);
+  uint16_t readHumidity(void);
 
   void update(void);
 

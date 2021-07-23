@@ -34,13 +34,18 @@ void loop() {
 
   // You can read the humidity and temperature values as often as you like
   // However, a new value will only be returned after the sensor produces one.
-  int8_t h = dht.readHumidity();
+  // NOTE!!! The returned values are multiplied by 10 and need to be divided by
+  // 10 in order to produce the correct results. This allows accuracy to 
+  // one decimal point without using floats.
+  int16_t h = dht.readHumidity();
   int16_t t = dht.readTemperature(0);
 
   // check if returns are valid then something went wrong!
   if ( t == BAD_TEMP || h == BAD_HUM ) { // if error conditions          
     // Data is not valid... do something...
+    // Remember to divide by 10.
   } else {
     // Do something with the data.
+    // Remember to divide by 10.
   }
 }

@@ -52,7 +52,7 @@ int16_t DHT::readTemperature(bool S) {
       f = (int16_t)(data[2] & 0x7F);
       f *= 256;
       f += (int16_t)data[3];
-      f /= 10;
+      //f /= 10;
       if (data[2] & 0x80)
         f *= -1;
       if (S)
@@ -67,22 +67,20 @@ int16_t DHT::readTemperature(bool S) {
 
 int16_t DHT::convertCtoF(int16_t c) { return (c * 9) / 5 + 32; }
 
-uint8_t DHT::readHumidity(void) { //  0-100 %
-  uint8_t f;
+uint16_t DHT::readHumidity(void) { //  0-1000 %
   uint16_t f2; // bigger to allow for math operations
   if (read()) {
     switch (_type) {
     case DHT11:
-      f = data[0];
-      return f;
+      f2 = data[0];
+      return f2;
     case DHT22:
     case DHT21:
       f2 = (uint16_t)data[0];
       f2 *= 256;
       f2 += data[1];
-      f2 /= 10;
-      f = (uint8_t)f2;
-      return f;
+      //f2 /= 10;
+      return f2;
     }
   }
   /* Serial.print("Read fail"); */
