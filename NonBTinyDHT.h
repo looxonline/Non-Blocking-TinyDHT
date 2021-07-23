@@ -29,6 +29,11 @@ written by Adafruit Industries
 #define BAD_HUM -1    //!< Bad humitidy reading
 #define BAD_TEMP -999 //!< Bad temperature reading
 
+#define DHWAITING 0   // Waiting for 2s to pass.
+#define DHPREPHIGH 1  // 2s has passed so we may as well read. 250ms high first
+#define DHPREPLOW 2   // Followed by a low for 20ms
+#define DHREADING 3   // Finally the short blocking read
+
 /*!
  * @brief Class that stores the state and functions for the DHT
  */
@@ -39,6 +44,8 @@ private:
   boolean read(void);
   unsigned long _lastreadtime;
   boolean firstreading;
+  uint8_t currentState;
+  boolean lastReadResult;
 
 public:
   /*!
@@ -70,5 +77,8 @@ public:
    * @return Returns the humidity read from the device
    */
   uint8_t readHumidity(void);
+
+  void update(void);
+
 };
 #endif

@@ -1,7 +1,7 @@
 // Example testing sketch for various DHT humidity/temperature sensors
 // Written by ladyada, modified for integer use, public domain
 
-#include "TinyDHT.h"
+#include "NonBTinyDHT.h"
 
 #define DHTPIN 2  // DHT connected to Arduino Uno Digital Pin 2
 
@@ -27,21 +27,20 @@ void setup() {
 }
 
 void loop() {
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+  // dht.update() must be called every main loop cycle. 
+  // Using delay functions in the main loop will not break it but
+  // it will delay the rate at which samples are taken.
+  dht.update();
+
+  // You can read the humidity and temperature values as often as you like
+  // However, a new value will only be returned after the sensor produces one.
   int8_t h = dht.readHumidity();
-  int16_t t = dht.readTemperature(1);
+  int16_t t = dht.readTemperature(0);
 
   // check if returns are valid then something went wrong!
   if ( t == BAD_TEMP || h == BAD_HUM ) { // if error conditions          
-    Serial.println("Failed to read from DHT");
+    // Data is not valid... do something...
   } else {
-    Serial.print("Humidity: "); 
-    Serial.print(h);
-    Serial.print(" %\t");
-    Serial.print("Temperature: "); 
-    Serial.print(t);
-    Serial.println(" *C");
+    // Do something with the data.
   }
-  delay(2000);
 }
