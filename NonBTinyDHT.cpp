@@ -160,9 +160,10 @@ void DHT::update(void) {
 
     // This is super time sensitive so we will do this in a blocking manner.
     noInterrupts();
+    pinMode(_pin, INPUT);
     digitalWrite(_pin, HIGH);
     delayMicroseconds(40);
-    pinMode(_pin, INPUT);
+    
 
     // read in timings
     for (i = 0; i < MAXTIMINGS; i++) {
@@ -176,8 +177,8 @@ void DHT::update(void) {
       }
       laststate = digitalRead(_pin);
 
-      //if (counter == 255) // Superflous
-        //break;
+      if (counter == 255)
+        break;
 
       // ignore first 3 transitions
       if ((i >= 4) && (i % 2 == 0)) {
